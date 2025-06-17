@@ -203,9 +203,11 @@ export default function SmartCityMobileApp() {
       height: '100%',
       flexDirection: 'column'
     }}>
+    <div>
       <div className="loader"></div>
     </div>
           <div>
+    </div>
             <h2>Simulating camera access...</h2>
             <div className="spinner" style={{
               margin: '2rem auto',
