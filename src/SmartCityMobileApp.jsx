@@ -31,6 +31,7 @@ export default function SmartCityMobileApp() {
 
   const handleValidation = () => {
     setShowValidationPopup(false);
+    setShowCameraPopup(true);
     setCameraSimulated(true);
     saveUserLocally(username);
     setLoading(true);
@@ -42,6 +43,7 @@ export default function SmartCityMobileApp() {
 
   const handleClosePopup = () => {
     setShowValidationPopup(false);
+    setShowCameraPopup(true);
   };
 
   const resetAll = () => {
@@ -51,6 +53,7 @@ export default function SmartCityMobileApp() {
     setAdminAuthenticated(false);
     setUsername("");
     setShowValidationPopup(false);
+    setShowCameraPopup(true);
     setCameraSimulated(false);
     setLoading(false);
   };
@@ -193,6 +196,15 @@ export default function SmartCityMobileApp() {
         )}
 
         {loading && (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100%',
+      flexDirection: 'column'
+    }}>
+      <div className="loader"></div>
+    </div>
           <div>
             <h2>Simulating camera access...</h2>
             <div className="spinner" style={{
