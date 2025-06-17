@@ -9,8 +9,7 @@ export default function SmartCityMobileApp() {
   const [showValidationPopup, setShowValidationPopup] = useState(false);
   const [cameraSimulated, setCameraSimulated] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [redirected, setRedirected] = useState(false);
-  const [validatedUsers, setValidatedUsers] = useState([]);
+    const [validatedUsers, setValidatedUsers] = useState([]);
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("validatedUsers") || "[]");
@@ -37,8 +36,7 @@ export default function SmartCityMobileApp() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      setRedirected(true);
-      window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+            window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
     }, 30000);
   };
 
