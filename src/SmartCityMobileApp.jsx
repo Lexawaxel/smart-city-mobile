@@ -53,7 +53,6 @@ export default function SmartCityMobileApp() {
     setShowValidationPopup(false);
     setCameraSimulated(false);
     setLoading(false);
-    setRedirected(false);
   };
 
   return (
