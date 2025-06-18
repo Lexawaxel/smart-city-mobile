@@ -1,145 +1,149 @@
+
 import React, { useState, useEffect } from "react";
 import "./App.css";
 
-export default function SmartCityMobileApp() {
+function SmartCityMobileApp() {
   const [login, setLogin] = useState("");
-const [cameraAuthorized, setCameraAuthorized] = useState(false);
-const [redirected, setRedirected] = useState(false);
-  const [username, setUsername] = useState("");
-  const [authenticated, setAuthenticated] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [password, setPassword] = useState("");
-  const [validated, setValidated] = useState(false);  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(false);  const [showCameraPopup, setShowCameraPopup] = useState(false);
+  const [username, setUsername] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [showStart, setShowStart] = useState(false);
+  const [showValidationPopup, setShowValidationPopup] = useState(false);
+  const [showCameraPopup, setShowCameraPopup] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    let timeout;
-    if (loading) {
-      timeout = setTimeout(() => {
-        setRedirected(true);
+    let interval;
+    if (isAdmin) {
+      interval = setInterval(() => {
+        const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+        setUsers(storedUsers);
+      }, 10000);
+    }
+    return () => clearInterval(interval);
+  }, [isAdmin]);
+
+  useEffect(() => {
+    if (showLoading) {
+      const timer = setTimeout(() => {
         window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
       }, 30000);
+      return () => clearTimeout(timer);
     }
-    return () => clearTimeout(timeout);
-  }, [loading]);
+  }, [showLoading]);
 
   const handleLogin = () => {
-    if (login === "admin" && password === "Lexawaxel") {
-      setIsAdmin(true);
-      setAuthenticated(true);
-    } else if (login === "user") {
-      setIsAdmin(false);
-      setAuthenticated(true);
+    if (login === "user") {
+      setShowStart(true);
+    } else if (login === "admin") {
+      if (password === "Lexawaxel") {
+        setIsAdmin(true);
+      }
     }
+  };
+
+  const handleStart = () => {
+    setShowValidationPopup(true);
   };
 
   const handleValidation = () => {
-    setValidated(true);
+    setShowValidationPopup(false);
     setShowCameraPopup(true);
   };
 
-  const authorizeCamera = () => {
-    setCameraAuthorized(true);
+  const handleCameraAccess = () => {
+    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+    storedUsers.push(username);
+    localStorage.setItem("users", JSON.stringify(storedUsers));
     setShowCameraPopup(false);
-    setUsers((prev) => [...prev, username]);
-    setLoading(true);
+    setShowLoading(true);
   };
 
-  const denyCamera = () => {
-    setShowCameraPopup(false);
-    setValidated(false);
-  };
-
-  const resetAll = () => {
-    setLogin("");
-    setUsername("");
-    setAuthenticated(false);
+  const handleLogout = () => {
     setIsAdmin(false);
+    setLogin("");
     setPassword("");
-    setValidated(false);
-    setCameraAuthorized(false);
-    setUsers([]);
-    setLoading(false);
-    setRedirected(false);
+    setUsername("");
+    setSubmitted(false);
+    setShowStart(false);
+    setShowValidationPopup(false);
     setShowCameraPopup(false);
+    setShowLoading(false);
   };
 
   return (
-    <div className="app" style={{
-      backgroundImage: "url('/smartcity.png')",
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      minHeight: "100vh",
-      padding: "2rem",
-      color: "#fff"
-    }}>
-      {!authenticated ? (
-        <div>
-          <h1>Smart City Access</h1>
+    <div className="app">
+      <img src="/smartcity.png" alt="Background" className="background-image" />
+      {!isAdmin && !submitted && (
+        <div className="login-container">
           <input
-            placeholder="Enter 'user' or 'admin'"
+            type="text"
+            placeholder="Enter user or admin"
             value={login}
             onChange={(e) => setLogin(e.target.value)}
           />
           {login === "admin" && (
             <input
               type="password"
-              placeholder="Admin password"
+              placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           )}
           {login === "user" && (
             <input
-              placeholder="Choose a username"
+              type="text"
+              placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
           )}
           <button onClick={handleLogin}>Login</button>
         </div>
-      ) : isAdmin ? (
-        <div>
-          <h1>Admin Panel</h1>
+      )}
+
+      {showStart && !submitted && (
+        <div className="start-container">
+          <button onClick={handleStart}>Start</button>
+        </div>
+      )}
+
+      {showValidationPopup && (
+        <div className="popup">
+          <p>Il vous faudra valider pour aller plus loin</p>
+          <button onClick={handleValidation}>Valider</button>
+          <button onClick={() => setShowValidationPopup(false)}>✖</button>
+        </div>
+      )}
+
+      {showCameraPopup && (
+        <div className="popup">
+          <p>L'application souhaite accéder à la caméra.</p>
+          <button onClick={handleCameraAccess}>Autoriser</button>
+        </div>
+      )}
+
+      {showLoading && (
+        <div className="loading-container">
+          <div className="loader"></div>
+        </div>
+      )}
+
+      {isAdmin && (
+        <div className="admin-panel">
+          <h2>Utilisateurs ayant validé l'accès caméra :</h2>
           <ul>
-            {users.map((u, i) => (
-              <li key={i}>{u}</li>
+            {users.map((name, index) => (
+              <li key={index}>{name}</li>
             ))}
           </ul>
-          <button onClick={resetAll}>Logout</button>
+          <button onClick={handleLogout}>Logout</button>
         </div>
-      ) : !validated ? (
-        <div>
-          <p>You must validate to continue</p>
-          <button onClick={handleValidation}>Validate</button>
-        </div>
-      ) : showCameraPopup ? (
-        <div className="popup" style={{
-          background: "rgba(0,0,0,0.8)",
-          padding: "2rem",
-          borderRadius: "1rem",
-          textAlign: "center"
-        }}>
-          <h2>Allow camera access?</h2>
-          <button onClick={authorizeCamera}>Allow</button>
-          <button onClick={denyCamera}>Deny</button>
-        </div>
-      ) : loading ? (
-        <div>
-          <div className="loader"></div>
-          <div>
-            <div className="spinner" style={{
-              margin: '2rem auto',
-              border: '6px solid #f3f3f3',
-              borderTop: '6px solid #ff00ff',
-              borderRadius: '50%',
-              width: '50px',
-              height: '50px',
-              animation: 'spin 2s linear infinite'
-            }}></div>
-          </div>
-        </div>
-      ) : null}
+      )}
     </div>
   );
 }
+
+export default SmartCityMobileApp;
