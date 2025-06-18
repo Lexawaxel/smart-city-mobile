@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import "./App.css";
 
@@ -75,7 +74,6 @@ function SmartCityMobileApp() {
 
   return (
     <div className="app">
-      <img src="/smartcity.png" alt="Background" className="background-image" />
       {!isAdmin && !submitted && (
         <div className="login-container">
           <input
@@ -127,7 +125,7 @@ function SmartCityMobileApp() {
 
       {showLoading && (
         <div className="loading-container">
-          <div className="loader"></div>
+          <div className="spinner"></div>
         </div>
       )}
 
