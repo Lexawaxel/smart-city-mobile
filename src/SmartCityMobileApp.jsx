@@ -3,6 +3,8 @@ import "./App.css";
 
 export default function SmartCityMobileApp() {
   const [login, setLogin] = useState("");
+const [cameraAuthorized, setCameraAuthorized] = useState(false);
+const [redirected, setRedirected] = useState(false);
   const [username, setUsername] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
