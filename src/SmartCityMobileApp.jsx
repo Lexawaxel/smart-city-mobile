@@ -7,12 +7,8 @@ export default function SmartCityMobileApp() {
   const [authenticated, setAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [password, setPassword] = useState("");
-  const [validated, setValidated] = useState(false);
-  const [cameraAuthorized, setCameraAuthorized] = useState(false);
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [redirected, setRedirected] = useState(false);
-  const [showCameraPopup, setShowCameraPopup] = useState(false);
+  const [validated, setValidated] = useState(false);  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);  const [showCameraPopup, setShowCameraPopup] = useState(false);
 
   useEffect(() => {
     let timeout;
