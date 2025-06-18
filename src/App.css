@@ -10,7 +10,7 @@ body, html {
 }
 
 .app {
-  background-image: url('smartcity.png');
+  background-image: url('/smartcity.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
