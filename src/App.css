@@ -1,89 +1,44 @@
 
-body, html {
+/* Basic cyberpunk themed centering and background */
+body {
   margin: 0;
   padding: 0;
   font-family: 'Orbitron', sans-serif;
-  background-color: #000;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}
-
-.app {
   background-image: url('smartcity.png');
   background-size: cover;
-  background-position: center;
   background-repeat: no-repeat;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-position: center;
+  color: #00ffe7;
 }
 
-.login-container,
-.start-container,
-.popup,
-.admin-panel {
-  background-color: rgba(0, 0, 0, 0.75);
-  padding: 2rem;
-  border: 2px solid #0ff;
-  border-radius: 10px;
-  box-shadow: 0 0 20px #0ff;
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #fff;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
 }
 
 input, button {
-  font-size: 1rem;
-  padding: 0.75rem 1rem;
-  margin: 0.5rem;
-  border: none;
-  border-radius: 5px;
-  font-family: 'Orbitron', sans-serif;
+  margin: 10px;
+  padding: 10px;
+  background: #111;
+  color: #00ffe7;
+  border: 1px solid #00ffe7;
+  border-radius: 4px;
 }
 
-input {
-  background-color: #111;
-  color: #0ff;
-  border: 1px solid #0ff;
-}
-
-button {
-  background: linear-gradient(90deg, #f0f, #0ff);
-  color: black;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.2s ease;
+.modal, .popup {
+  background-color: rgba(0,0,0,0.85);
+  border: 1px solid #00ffe7;
+  padding: 20px;
+  border-radius: 8px;
+  color: #00ffe7;
+  max-width: 80%;
 }
 
 button:hover {
-  transform: scale(1.05);
-}
-
-.loader,
-.spinner {
-  border: 6px solid #f3f3f3;
-  border-top: 6px solid #f0f;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 1s linear infinite;
-  margin: 2rem auto;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-  text-align: left;
-}
-
-.background-image {
-  display: none; /* We use it as CSS background now */
+  background-color: #00ffe7;
+  color: #000;
 }
